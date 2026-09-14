@@ -70,6 +70,7 @@ def dijkstra(G, s):
                 heapq.heappush(Q, (distancia[u], u))
 
     return distancia
+
 # -----------------------------------------------------------------------------
 
 def leerEntrada(datos):
