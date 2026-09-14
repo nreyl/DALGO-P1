@@ -63,13 +63,6 @@ def dijkstra(G, s):
                 
     return distancia
 
-def relajar(u, v, w, d, padres):
-    # if d[u] + w(u, v) < d[v]:
-    if d[u] + w.get((u, v), float('inf')) < d[v]:
-        d[v] = d[u] + w.get((u, v), float('inf'))
-        padres[v] = u
-        return True
-    return False
 # -----------------------------------------------------------------------------
 
 def leerEntrada(datos):
