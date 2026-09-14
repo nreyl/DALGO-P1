@@ -34,42 +34,42 @@ def construirGrafo(numOrbitas, numPosiciones, energia, portales):
 
 
 # -----------------------------------------------------------------------------
-# Implementación de Dijkstra vista en clase (sin modificar ni una línea)
+# Implementación de Dijkstra vista en clase, usando el método relajar()
 # -----------------------------------------------------------------------------
+def relajar(u, v, peso, d, padres):
+    # if d[u] + w(u, v) < d[v]:
+    if d[u] + peso < d[v]:
+        d[v] = d[u] + peso
+        padres[v] = u
+        return True
+    return False
+
+
 def dijkstra(G, s):
     # Inicialización de distancias
     distancia = {v: float('inf') for v in G}
     distancia[s] = 0
-    
+    padres = {v: None for v in G}
+
     # Q = cola de prioridad de mínimo
     Q = [(0, s)]
     heapq.heapify(Q)
-    
+
     # while Q not empty:
     while Q:
         d, v = heapq.heappop(Q)
-        
+
         if d > distancia[v]:
             continue
-            
+
         # for u in vecindario(v):
         for u, peso in G.get(v, []):
             # if relajar(v, u):
-            nueva_distancia = distancia[v] + peso
-            if nueva_distancia < distancia[u]:
-                distancia[u] = nueva_distancia
+            if relajar(v, u, peso, distancia, padres):
                 # Q.decrease_key() (simulado eficientemente mediante inserción en heapq)
                 heapq.heappush(Q, (distancia[u], u))
-                
-    return distancia
 
-def relajar(u, v, w, d, padres):
-    # if d[u] + w(u, v) < d[v]:
-    if d[u] + w.get((u, v), float('inf')) < d[v]:
-        d[v] = d[u] + w.get((u, v), float('inf'))
-        padres[v] = u
-        return True
-    return False
+    return distancia
 # -----------------------------------------------------------------------------
 
 def leerEntrada(datos):
